@@ -13,17 +13,13 @@ public class PercolationStats {
 		for (int t = 0; t < T; t++) {
 			Percolation percolation = new Percolation(N);
 			double count = 0;
-			boolean[] opened = new boolean[N * N];
 			while (!percolation.percolates()) {
-				int site = StdRandom.uniform(N * N);
-				if (opened[site]) {
-					continue;
+				int i = StdRandom.uniform(1, N+1);
+				int j= StdRandom.uniform(1, N+1);
+				if(!percolation.isOpen(i, j)){
+					percolation.open(i, j);
+					count++;
 				}
-				opened[site] = true;
-				int i = site / N + 1;
-				int j = site % N + 1;
-				percolation.open(i, j);
-				count++;
 			}
 			frac[t] = count / (N * N);
 		}

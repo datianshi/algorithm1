@@ -1,22 +1,22 @@
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
-
-
 public class Percolation {
 	private WeightedQuickUnionUF wQuickUnion;
 	private int width;
 	// false means block, while true means open
 	private boolean[] site;
 	private int numOfObjects;
+	int topRootNode;
+	int botomRootNode;
 
 	public Percolation(int N) {
 		numOfObjects = N * N;
 		site = new boolean[numOfObjects];
 		width = N;
-		wQuickUnion = new WeightedQuickUnionUF(N * N);
+		wQuickUnion = new WeightedQuickUnionUF(N * N + 2);
 		for (int i = 0; i < numOfObjects; i++) {
 			site[i] = false;
 		}
+		topRootNode = N*N;
+		botomRootNode = N*N + 1;
 	}
 
 	public void open(int i, int j) {
@@ -25,6 +25,13 @@ public class Percolation {
 		}
 		int position = index(i, j);
 		site[position] = true;
+		//virtulization of the root node
+		if( i == 1){
+			wQuickUnion.union(position, topRootNode);
+		}
+		if( i == width){
+			wQuickUnion.union(position, botomRootNode);
+		}
 		int[] neighbors = getNeighbors(i, j);
 		for (int n = 0; n < neighbors.length; n++) {
 			if (site[neighbors[n]]) {
@@ -45,21 +52,12 @@ public class Percolation {
 		if (!site[position]) {
 			return false;
 		}
-		for (int col = 0; col < width; col++) {
-			if (wQuickUnion.connected(position, col)) {
-				return true;
-			}
-		}
-		return false;
+
+		return wQuickUnion.connected(position, topRootNode);
 	}
 
 	public boolean percolates() {
-		for (int i = 1; i <= width; i++) {
-			if (isFull(width, i)) {
-				return true;
-			}
-		}
-		return false;
+		return wQuickUnion.connected(topRootNode, botomRootNode);
 	}
 
 	protected int index(int i, int j) {

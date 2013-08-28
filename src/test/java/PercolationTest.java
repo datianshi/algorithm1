@@ -118,5 +118,23 @@ public class PercolationTest {
 		Percolation p = new Percolation(10);
 		p.open(6, 0);
 	}
+	
+	@Test
+	public void timingPercolatinStats(){
+		trackTimePercolation(2);
+		trackTimePercolation(4);
+		trackTimePercolation(8);
+		trackTimePercolation(16);
+		trackTimePercolation(32);
+		trackTimePercolation(64);
+		trackTimePercolation(128);
+		trackTimePercolation(256);
+	}
+	
+	private void trackTimePercolation(int n){
+		Stopwatch watch = new Stopwatch();
+		PercolationStats p = new PercolationStats(n, 100);
+		System.out.println("For N:" + n + " the execution time is:" + watch.elapsedTime()); 
+	}
 		
 }
