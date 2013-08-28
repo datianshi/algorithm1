@@ -1,4 +1,4 @@
-package org.shaozhending.percolation;
+
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -93,6 +93,30 @@ public class PercolationTest {
 		Assert.assertFalse(percolation.percolates());
 		percolation.open(2, 3);
 		Assert.assertTrue(percolation.percolates());
+		
+	}
+	
+	@Test
+	public void TwoPercolcationTest(){
+		Percolation p = new Percolation(2);
+		p.open(1, 1);
+		Assert.assertFalse(p.percolates());
+		p = new Percolation(2);
+		p.open(1, 2);
+		p = new Percolation(2);
+		Assert.assertFalse(p.percolates());
+		p.open(2, 1);
+		p = new Percolation(2);
+		Assert.assertFalse(p.percolates());
+		p.open(2, 2);
+		p = new Percolation(2);
+		Assert.assertFalse(p.percolates());
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testInvalidIndex(){
+		Percolation p = new Percolation(10);
+		p.open(6, 0);
 	}
 		
 }

@@ -1,0 +1,2 @@
+mvn install:install-file -Dfile=algs4.jar -DgroupId=algorithm -DartifactId=algs4 -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=stdlib.jar -DgroupId=algorithm -DartifactId=stdlib -Dversion=1.0 -Dpackaging=jar
