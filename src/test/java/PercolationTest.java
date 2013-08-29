@@ -129,6 +129,7 @@ public class PercolationTest {
 		trackTimePercolation(64);
 		trackTimePercolation(128);
 		trackTimePercolation(256);
+		trackTimePercolation(1024);
 	}
 	
 	private void trackTimePercolation(int n){

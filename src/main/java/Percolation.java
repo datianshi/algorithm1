@@ -1,5 +1,7 @@
 public class Percolation {
     private WeightedQuickUnionUF wQuickUnion;
+    //TO fix the back wash problem
+    private WeightedQuickUnionUF backUp;
     private int width;
     // false means block, while true means open
     private boolean[] site;
@@ -12,6 +14,7 @@ public class Percolation {
         site = new boolean[numOfObjects];
         width = N;
         wQuickUnion = new WeightedQuickUnionUF(N * N + 2);
+        backUp = new WeightedQuickUnionUF(N*N + 2);
         for (int i = 0; i < numOfObjects; i++) {
             site[i] = false;
         }
@@ -28,6 +31,7 @@ public class Percolation {
         // virtulization of the root node
         if (i == 1) {
             wQuickUnion.union(topRootNode, position);
+            backUp.union(topRootNode, position);
         }
         if (i == width && !percolates()) {
             wQuickUnion.union(position, botomRootNode);
@@ -36,6 +40,7 @@ public class Percolation {
         for (int n = 0; n < neighbors.length; n++) {
             if (site[neighbors[n]]) {
                 wQuickUnion.union(position, neighbors[n]);
+                backUp.union(position, neighbors[n]);
             }
         }
     }
@@ -55,8 +60,8 @@ public class Percolation {
         if (!site[position]) {
             return false;
         }
-
-        return wQuickUnion.connected(position, topRootNode);
+        
+        return backUp.connected(position, topRootNode);
     }
 
     public boolean percolates() {
