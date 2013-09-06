@@ -2,10 +2,10 @@
 import junit.framework.Assert;
 
 import org.junit.Test;
-public class RandomizedQueueTest {
+public class RegularQueueTest {
     @Test
     public void test(){
-        RandomizedQueue<String> queue = new RandomizedQueue<String>();
+        RegularQueue<String> queue = new RegularQueue<String>();
         Assert.assertEquals(0, queue.size());
         queue.enqueue("5");
         testCorrect(queue, array("5"));
@@ -58,7 +58,7 @@ public class RandomizedQueueTest {
         
     }
     
-    private void testCorrect(RandomizedQueue<String> queue, String[] array){
+    private void testCorrect(RegularQueue<String> queue, String[] array){
         int i = 0;
         for(String q : queue){
             Assert.assertEquals(q, array[i]);
