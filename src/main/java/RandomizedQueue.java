@@ -89,7 +89,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         head = 0;
         q = copy;
     }
-
+    
     public Item dequeue() {
         if (size() == 0) {
             throw new NoSuchElementException();
@@ -100,23 +100,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (head == q.length) {
             head = 0;
         }
-        Item item = q[head];
-        q[head] = null;
-        head++;
-        return item;
-    }
-    
-    public Item dequeueRandom() {
-        if (size() == 0) {
-            throw new NoSuchElementException();
-        }
-        if (size() == q.length / 4) {
-            shrink(q.length / 4);
-        }
-        if (head == q.length) {
-            head = 0;
-        }
-        Item item = q[head];
+        
+        int deletedIndex = randomIndex();
+        Item item = q[deletedIndex];
+        q[deletedIndex] = q[head];
         q[head] = null;
         head++;
         return item;
