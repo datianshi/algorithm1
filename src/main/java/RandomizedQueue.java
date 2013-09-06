@@ -35,7 +35,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public void enqueue(Item item) {
-        if(item == null){
+        if (item == null) {
             throw new NullPointerException();
         }
         if (size() == q.length)
@@ -67,29 +67,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private void shrink(int capacity) {
         Item[] copy = (Item[]) new Object[capacity];
-        if (head < tail) {
-            int index = 0;
-            for (int i = head; i < tail; i++) {
-                copy[index] = q[i];
-                index++;
-            }
-            tail = q.length;
-        } else {
-            int index = 0;
-            for (int i = head; i < q.length; i++) {
-                copy[index] = q[i];
-                index++;
-            }
-            for (int i = 0; i < (q.length + tail - head); i++) {
-                copy[index] = q[i];
-                index++;
-            }
-        }
-
+        copyArray(copy);
         head = 0;
         q = copy;
     }
-    
+
     public Item dequeue() {
         if (size() == 0) {
             throw new NoSuchElementException();
@@ -100,60 +82,75 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (head == q.length) {
             head = 0;
         }
-        
+
         int deletedIndex = randomIndex();
         Item item = q[deletedIndex];
         q[deletedIndex] = q[head];
         q[head] = null;
         head++;
         return item;
-    }    
+    }
 
     public Item sample() {
         if (size() == 0) {
             throw new NoSuchElementException();
         }
-        return null;
+        return q[randomIndex()];
     }
 
     public Iterator<Item> iterator() {
         return new RandomizedIterator();
     }
-    
-    private int randomIndex(){
+
+    private int randomIndex() {
         int random = StdRandom.uniform(size());
         int index = random + head;
-        if(index < q.length){
+        if (index < q.length) {
             return index;
-        }
-        else{
+        } else {
             return index - q.length;
         }
-        
+
+    }
+
+    private void copyArray(Item[] copy) {
+        int index = 0;
+        if (head < tail) {
+            for (int i = head; i < tail; i++) {
+                copy[index] = q[i];
+                index++;
+            }
+        } else {
+            for (int i = head; i < q.length; i++) {
+                copy[index] = q[i];
+                index++;
+            }
+            for (int i = 0; i < tail; i++) {
+                copy[index] = q[i];
+                index++;
+            }
+        }
     }
 
     private class RandomizedIterator implements Iterator<Item> {
 
-        private int current = head;
+        private RandomizedIterator() {
+            int size = size();
+            items = (Item[]) new Object[size];
+            if (size > 0) {
+                copyArray(items);
+            }
+        }
+
+        private Item[] items;
+        private int current = 0;
 
         public boolean hasNext() {
-            if(current == tail){
-                return false;
-            }
-            else if(current == q.length){
-                if(tail == 0){
-                    return false;
-                }
-                current = 0;
-            }
-            return true;
+            return current != items.length;
         }
 
         public Item next() {
-            if(current >= q.length || q[current] == null){
-                throw new NoSuchElementException();
-            }
-            Item item = q[current];
+            Item item = items[current];
             current++;
             return item;
         }

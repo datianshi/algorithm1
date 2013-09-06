@@ -2,6 +2,7 @@
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class PercolationTest {
@@ -120,6 +121,7 @@ public class PercolationTest {
 	}
 	
 	@Test
+	@Ignore
 	public void timingPercolatinStats(){
 		trackTimePercolation(2);
 		trackTimePercolation(4);

@@ -54,8 +54,6 @@ public class RegularQueueTest {
         
         testCorrect(queue, array("8", "9", "10"));
         
-        
-        
     }
     
     private void testCorrect(RegularQueue<String> queue, String[] array){

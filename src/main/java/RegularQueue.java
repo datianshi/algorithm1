@@ -73,14 +73,13 @@ public class RegularQueue<Item> implements Iterable<Item> {
                 copy[index] = q[i];
                 index++;
             }
-            tail = q.length;
         } else {
             int index = 0;
             for (int i = head; i < q.length; i++) {
                 copy[index] = q[i];
                 index++;
             }
-            for (int i = 0; i < (q.length + tail - head); i++) {
+            for (int i = 0; i < tail; i++) {
                 copy[index] = q[i];
                 index++;
             }
