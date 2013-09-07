@@ -40,6 +40,20 @@ public class DequeTest {
         testCorrect(deque, array);
     }
     
+    @Test
+    public void testIterator(){
+        Deque<Integer> deque = new Deque<Integer>();
+        int num = 10000;
+        
+        for(int i=0; i< num; i++){
+            deque.addLast(i);
+        }
+        
+        for(Integer i : deque){
+            System.out.println(i);
+        }
+    }
+    
     private void testCorrect(Deque<Integer> deque, int[] array){
         int i = 0;
         for(int d : deque){
@@ -47,4 +61,6 @@ public class DequeTest {
             i++;
         }
     }
+    
+    
 }

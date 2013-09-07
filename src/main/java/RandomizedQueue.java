@@ -12,10 +12,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         q = (Item[]) new Object[1];
     }
 
-    public Item[] getItems() {
-        return q;
-    }
-
     public boolean isEmpty() {
         return size() == 0;
     }
@@ -68,6 +64,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private void shrink(int capacity) {
         Item[] copy = (Item[]) new Object[capacity];
         copyArray(copy);
+        tail = capacity;
         head = 0;
         q = copy;
     }
@@ -133,23 +130,26 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private class RandomizedIterator implements Iterator<Item> {
+        private Item[] items;
+        private int current = 0;
 
         private RandomizedIterator() {
             int size = size();
             items = (Item[]) new Object[size];
             if (size > 0) {
                 copyArray(items);
+                StdRandom.shuffle(items);
             }
         }
-
-        private Item[] items;
-        private int current = 0;
 
         public boolean hasNext() {
             return current != items.length;
         }
 
         public Item next() {
+            if (current == items.length) {
+                throw new NoSuchElementException();
+            }
             Item item = items[current];
             current++;
             return item;

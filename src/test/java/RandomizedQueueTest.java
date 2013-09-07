@@ -76,6 +76,36 @@ public class RandomizedQueueTest {
         print(queue);
 
     }
+    
+    @Test
+    public void equeueFour(){
+        RandomizedQueue<String> queue = new RandomizedQueue<String>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
+    }
+    
+    @Test
+    public void equeueNine(){
+        RandomizedQueue<String> queue = new RandomizedQueue<String>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+        queue.enqueue("G");
+        queue.enqueue("H");
+        queue.enqueue("I");
+        for(int i=0 ;i< 9; i++){
+            System.out.println(queue.dequeue());
+        }
+    }    
 
     private void print(RandomizedQueue<String> q) {
         System.out.print("The queue is: ");
