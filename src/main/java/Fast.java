@@ -31,6 +31,13 @@ public class Fast {
 
             Arrays.sort(array, points[i].SLOPE_ORDER);
 
+            double[] slopes = new double[i];
+            for (int x = 0; x < i; x++) {
+                slopes[x] = points[x].slopeTo(points[i]);
+            }
+
+            Arrays.sort(slopes);
+
             int newArrayIndex = 0;
             double slope = points[i].slopeTo(array[newArrayIndex]);
             int count = 0;
@@ -49,12 +56,15 @@ public class Fast {
                         double oldSlope = points[i]
                                 .slopeTo(array[newArrayIndex - 1]);
                         boolean print = true;
-                        for (int p = 0; p < i; p++) {
-                            if (points[p].slopeTo(points[i]) == oldSlope) {
-                                print = false;
-                                break;
-                            }
+                        if (Arrays.binarySearch(slopes, oldSlope) >= 0) {
+                            print = false;
                         }
+                        // for (int p = 0; p < i; p++) {
+                        // if (points[p].slopeTo(points[i]) == oldSlope) {
+                        // print = false;
+                        // break;
+                        // }
+                        // }
 
                         if (print) {
                             Point prev = points[i];
