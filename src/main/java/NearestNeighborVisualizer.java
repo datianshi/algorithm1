@@ -8,7 +8,7 @@ public class NearestNeighborVisualizer {
         StdDraw.show(0);
 
         // initialize the two data structures with point from standard input
-        KdTree brute = new KdTree();
+        PointSET brute = new PointSET();
 //        KdTree kdtree = new KdTree();
         while (!in.isEmpty()) {
             double x = in.readDouble();

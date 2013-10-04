@@ -17,6 +17,7 @@ public class SimpleDrawVisualizer {
             Point2D p = new Point2D(x, y);
 //            kdtree.insert(p);
             kdtree.insert(p);
+            System.out.println(kdtree.size());
         }
 
         // draw the points

@@ -20,5 +20,7 @@ public class KdtreeTest {
         Assert.assertTrue(kd.contains(p2));
         Assert.assertTrue(kd.contains(p3));
         Assert.assertTrue(!kd.contains(p4));
+        
+        Assert.assertEquals(3, kd.size());
     }
 }

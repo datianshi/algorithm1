@@ -1,9 +1,8 @@
 import java.util.Iterator;
-import java.util.TreeSet;
 
 public class KdTree {
-    Node root = null;
-    int size = 0;
+    private Node root = null;
+    private int size = 0;
 
     public KdTree() {
 
@@ -23,6 +22,7 @@ public class KdTree {
         if (root == null) {
             RectHV rectHV = new RectHV(0, 0, 1, 1);
             root = new Node(p, rectHV, null, null);
+            size++;
         } else
             insertHelper(height + 1, node, p);
     }
@@ -30,27 +30,40 @@ public class KdTree {
     private void insertHelper(int height, Node node, Point2D point) {
         boolean left = false;
         RectHV rectHV = null;
+        if (node.p.equals(point)) {
+            return;
+        }
         if (height % 2 == 1) {
             left = point.x() <= node.p.x();
-            rectHV = left ? new RectHV(node.rect.xmin(), node.rect.ymin(),
-                    node.p.x(), node.rect.ymax()) : new RectHV(node.p.x(),
-                    node.rect.ymin(), node.rect.xmax(), node.rect.ymax());
+//            rectHV = left ? new RectHV(node.rect.xmin(), node.rect.ymin(),
+//                    node.p.x(), node.rect.ymax()) : new RectHV(node.p.x(),
+//                    node.rect.ymin(), node.rect.xmax(), node.rect.ymax());
         } else {
             left = point.y() <= node.p.y();
-            rectHV = left ? new RectHV(node.rect.xmin(), node.rect.ymin(),
-                    node.rect.xmax(), node.p.y()) : new RectHV(
-                    node.rect.xmin(), node.p.y(), node.rect.xmax(),
-                    node.rect.ymax());
+//            rectHV = left ? new RectHV(node.rect.xmin(), node.rect.ymin(),
+//                    node.rect.xmax(), node.p.y()) : new RectHV(
+//                    node.rect.xmin(), node.p.y(), node.rect.xmax(),
+//                    node.rect.ymax());
         }
         if (left) {
             if (node.lb == null) {
+                rectHV = height % 2 == 1 ? new RectHV(node.rect.xmin(),
+                        node.rect.ymin(), node.p.x(), node.rect.ymax())
+                        : new RectHV(node.rect.xmin(), node.rect.ymin(),
+                                node.rect.xmax(), node.p.y());
                 node.lb = new Node(point, rectHV, null, null);
+                size++;
             } else {
                 insertHelper(height + 1, node.lb, point);
             }
         } else {
             if (node.rt == null) {
+                rectHV = height % 2 == 1 ? new RectHV(node.p.x(),
+                        node.rect.ymin(), node.rect.xmax(), node.rect.ymax())
+                        : new RectHV(node.rect.xmin(), node.p.y(),
+                                node.rect.xmax(), node.rect.ymax());
                 node.rt = new Node(point, rectHV, null, null);
+                size++;
             } else {
                 insertHelper(height + 1, node.rt, point);
             }
@@ -93,7 +106,7 @@ public class KdTree {
         }
         if (height % 2 == 0) {
             StdDraw.setPenColor(StdDraw.BLACK);
-            StdDraw.setPenRadius(.01);
+            StdDraw.setPenRadius(.02);
             node.p.draw();
             StdDraw.setPenRadius(.005);
             StdDraw.setPenColor(StdDraw.RED);
@@ -102,7 +115,7 @@ public class KdTree {
             // Stand
         } else {
             StdDraw.setPenColor(StdDraw.BLACK);
-            StdDraw.setPenRadius(.01);
+            StdDraw.setPenRadius(.02);
             node.p.draw();
             StdDraw.setPenRadius(.005);
             StdDraw.setPenColor(StdDraw.BLUE);
@@ -121,11 +134,11 @@ public class KdTree {
         if (node == null) {
             return;
         } else {
-            if (!rect.intersects(node.rect)) {
-                return;
-            }
             if (rect.contains(node.p)) {
                 stack.push(node.p);
+            }
+            if (!rect.intersects(node.rect)) {
+                return;
             } else {
                 rangeHelper(stack, rect, node.lb);
                 rangeHelper(stack, rect, node.rt);

@@ -1,11 +1,10 @@
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class PointSET {
 
-    SET<Point2D> points;
+    private SET<Point2D> points;
 
     public PointSET() {
         points = new SET<Point2D>();
@@ -50,7 +49,7 @@ public class PointSET {
     }
 
     public Point2D nearest(Point2D p) {
-        TreeSet<Point2D> set = new TreeSet<Point2D>(p.DISTANCE_TO_ORDER);
+        TreeSet<Point2D> set = new TreeSet<Point2D>(new DistanceToOrder(p));
         for (Point2D point : points) {
             set.add(point);
         }
@@ -63,6 +62,25 @@ public class PointSET {
             return floor;
         } else {
             return ceil;
+        }
+    }
+
+    private class DistanceToOrder implements Comparator<Point2D> {
+        private Point2D point2d;
+
+        public DistanceToOrder(Point2D point2d) {
+            this.point2d = point2d;
+        }
+
+        public int compare(Point2D p, Point2D q) {
+            double dist1 = point2d.distanceSquaredTo(p);
+            double dist2 = point2d.distanceSquaredTo(q);
+            if (dist1 < dist2)
+                return -1;
+            else if (dist1 > dist2)
+                return +1;
+            else
+                return 0;
         }
     }
 }
