@@ -10,7 +10,7 @@ public class RangeSearchVisualizer {
         StdDraw.show(0);
 
         // initialize the data structures with N points from standard input
-        PointSET brute = new PointSET();
+        KdTree brute = new KdTree();
 //        PointSET kdtree = new KdTree();
         while (!in.isEmpty()) {
             double x = in.readDouble();

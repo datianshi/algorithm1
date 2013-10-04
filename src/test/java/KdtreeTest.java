@@ -6,7 +6,7 @@ import org.junit.Test;
 public class KdtreeTest {
     @Test
     public void testKdTree(){
-        kdTree kd = new kdTree();
+        KdTree kd = new KdTree();
         Point2D p1 = new Point2D(0.1, 0.2);
         Point2D p2 = new Point2D(0.15, 0.15);
         Point2D p3 = new Point2D(0.3, 0.1);

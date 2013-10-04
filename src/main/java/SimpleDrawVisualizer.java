@@ -9,7 +9,7 @@ public class SimpleDrawVisualizer {
 
         StdDraw.show(0);
 
-        kdTree kdtree = new kdTree();
+        KdTree kdtree = new KdTree();
 //        PointSET kdtree = new KdTree();
         while (!in.isEmpty()) {
             double x = in.readDouble();

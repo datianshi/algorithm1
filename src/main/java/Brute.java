@@ -18,7 +18,7 @@ public class Brute {
             points[index].draw();
             index++;
         }
-        
+
         Arrays.sort(points);
 
         for (int i = 0; i < n; i++) {
